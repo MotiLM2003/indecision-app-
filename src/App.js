@@ -1,59 +1,41 @@
-const app = {
-  title: 'Title',
-  subTitle: 'sub title',
-  options: [],
-};
-
-const isTitleExists = () => app.title;
-
-const onFormSubmit = (e) => {
-  e.preventDefault();
-  const option = e.target.elements.option.value;
-  if (option) {
-    app.options.push(option);
-    e.target.elements.option.value = '';
-
-    render();
-  } else {
-    console.log('no content');
+class Header extends React.Component {
+  render() {
+    return (
+      <div>
+        <h1>Indecision </h1>
+        <h2>Put your life in the hands of computer</h2>
+      </div>
+    );
   }
-};
+}
 
-const removeAll = () => {
-  app.options = [];
-  render();
-};
+class Action extends React.Component {
+  render() {
+    return (
+      <div>
+        <button>What should I do?</button>
+      </div>
+    );
+  }
+}
 
-const onMakeDescision = () => {
-  const rnd = Math.floor(Math.random() * app.options.length);
-  const option = app.options[rnd];
-  console.log(option);
-};
+class Options extends React.Component {
+  render() {
+    return <div>Option component</div>;
+  }
+}
 
-const render = () => {
-  var template = (
-    <div>
-      {app.title && <h1>{app.title}</h1>}
-      {app.subTitle && <p>{app.subTitle}</p>}
-      {app.options && app.options.length > 0 && <p>here are your options</p>}
-      <ol>
-        {app.options.map((option, index) => (
-          <li key={index}>{option}</li>
-        ))}
-      </ol>
-      <button onClick={onMakeDescision} disabled={app.options.length === 0}>
-        What should I do?
-      </button>
-      <button onClick={removeAll}> Remove All </button>
-
-      <form action='' onSubmit={onFormSubmit}>
-        <input type='text' name='option' />
-        <button>Add Button</button>
-      </form>
-    </div>
-  );
-
-  ReactDOM.render(template, document.getElementById('root'));
-};
-
-render();
+class AddOption extends React.Component {
+  render() {
+    return <div>AddOption component</div>;
+  }
+}
+const jsx = (
+  <div>
+    <Header />
+    <Action />
+    <Options />
+    <AddOption />
+  </div>
+);
+ReactDOM.render(jsx, document.getElementById('root'));
