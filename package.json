@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "babel src/App.js --out-file=public/scripts/app.js --presets=env,react --watch"
+    "dev": "babel src/App.js --out-file=public/scripts/app.js --presets=env,react --watch",
+    "sandbox": "babel src/playground/es6-classes-1.js --out-file=public/scripts/app.js --presets=env,react --watch"
   },
   "author": "",
   "license": "ISC",
