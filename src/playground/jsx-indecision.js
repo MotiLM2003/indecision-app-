@@ -12,7 +12,6 @@ const onFormSubmit = (e) => {
   if (option) {
     app.options.push(option);
     e.target.elements.option.value = '';
-
     render();
   } else {
     console.log('no content');
