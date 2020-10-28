@@ -1,9 +1,10 @@
 class IndecisionApp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { options: ['Thing One', 'Thing two', 'Thing three'] };
+    this.state = { options: [] };
 
     this.handleRemoveAll = this.handleRemoveAll.bind(this);
+    this.handlePick = this.handlePick.bind(this);
     this.handleAddItem = this.handleAddItem.bind(this);
   }
 
@@ -13,10 +14,23 @@ class IndecisionApp extends React.Component {
     });
   }
 
+  handlePick() {
+    const index = Math.floor(Math.random() * this.state.options.length);
+    alert(this.state.options[index]);
+  }
+
   handleAddItem(item) {
-    console.log(item);
-    this.setState({ options: this.state.options.push(item) });
-    console.log('working kinda');
+    if (!item) {
+      return 'Option must have value.';
+    }
+    if (this.state.options.indexOf(item) !== -1) {
+      return 'option already exists';
+    }
+    this.setState((prev) => {
+      return {
+        options: prev.options.concat([item]),
+      };
+    });
   }
 
   render() {
@@ -26,7 +40,7 @@ class IndecisionApp extends React.Component {
     return (
       <div>
         <Header title={title} subTitle={subTitle} />
-        <Action length={options.length === 0} />
+        <Action length={options.length === 0} handlePick={this.handlePick} />
         <Options options={options} handleRemoveAll={this.handleRemoveAll} />
         <AddOption handleAddItem={this.handleAddItem} />
       </div>
@@ -49,14 +63,12 @@ class Action extends React.Component {
   constructor(props) {
     super(props);
   }
-  handlePick() {
-    alert(' picking');
-  }
+
   render() {
     const { length } = this.props;
     return (
       <div>
-        <button disabled={length} onClick={this.handlePick}>
+        <button disabled={length} onClick={this.props.handlePick}>
           What should I do?
         </button>
       </div>
@@ -71,8 +83,6 @@ class Options extends React.Component {
 
   render() {
     const { options, handleRemoveAll } = this.props;
-    console.log('in options, array: ', options);
-    console.log(options);
     return (
       <div>
         <button onClick={() => handleRemoveAll()}>Remove All</button>
@@ -95,15 +105,29 @@ class AddOption extends React.Component {
   constructor(props) {
     super(props);
     this.addOption = this.addOption.bind(this);
+
+    this.state = { error: undefined };
   }
 
   addOption(e) {
     e.preventDefault();
-    this.props.handleAddItem();
+    const item = e.target.elements.option.value.trim();
+    const error = this.props.handleAddItem(item);
+    console.log(error);
+    if (error) {
+      this.setState(() => {
+        return { error };
+      });
+    } else {
+      e.target.elements.option.value = '';
+    }
   }
   render() {
+    const { error } = this.state;
     return (
       <div>
+        {console.log(this.state.error === true) ? 'true' : 'false'}
+        {this.state.error && <p>{error}</p>}
         <form onSubmit={this.addOption}>
           <input type='text' name='option' />
           <button>Add Option</button>
