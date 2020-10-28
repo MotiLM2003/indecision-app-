@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "babel src/App.js --out-file=public/scripts/app.js --presets=env,react --watch",
+    "sandbox-counter": "babel src/playground/practice-1.js --out-file=public/scripts/app.js --presets=env,react --watch",
     "sandbox": "babel src/playground/practice-2.js --out-file=public/scripts/app.js --presets=env,react --watch"
   },
   "author": "",

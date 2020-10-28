@@ -3,7 +3,7 @@ class Counter extends React.Component {
     super(props);
 
     this.state = {
-      counter: 0,
+      counter: props.counter,
       name: 'moti',
     };
 
@@ -53,6 +53,9 @@ class Counter extends React.Component {
   }
 }
 
+Counter.defaultProps = {
+  counter: Math.floor(Math.random() * 10) + 1,
+};
 ReactDOM.render(<Counter />, document.getElementById('root'));
 
 // let count = 0;
