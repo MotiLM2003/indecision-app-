@@ -26,6 +26,21 @@ var IndecisionApp = function (_React$Component) {
   }
 
   _createClass(IndecisionApp, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      console.log('mount');
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      console.log(prevState);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      console.log('component unmount');
+    }
+  }, {
     key: 'handleRemoveAll',
     value: function handleRemoveAll() {
       this.setState(function () {
@@ -194,7 +209,7 @@ var AddOption = function (_React$Component2) {
       e.preventDefault();
       var item = e.target.elements.option.value.trim();
       var error = this.props.handleAddItem(item);
-      console.log(error);
+
       if (error) {
         this.setState(function () {
           return { error: error };
@@ -210,7 +225,6 @@ var AddOption = function (_React$Component2) {
       return React.createElement(
         'div',
         null,
-        console.log(this.state.error === true) ? 'true' : 'false',
         this.state.error && React.createElement(
           'p',
           null,

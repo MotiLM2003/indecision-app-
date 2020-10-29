@@ -9,6 +9,18 @@ class IndecisionApp extends React.Component {
     this.removeItem = this.removeItem.bind(this);
   }
 
+  componentDidMount() {
+    console.log('mount');
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log(prevState);
+  }
+
+  componentWillUnmount() {
+    console.log('component unmount');
+  }
+
   handleRemoveAll() {
     this.setState(() => ({ options: [] }));
   }
@@ -124,7 +136,7 @@ class AddOption extends React.Component {
     e.preventDefault();
     const item = e.target.elements.option.value.trim();
     const error = this.props.handleAddItem(item);
-    console.log(error);
+
     if (error) {
       this.setState(() => ({ error }));
       e.target.elements.option.value = '';
@@ -134,7 +146,6 @@ class AddOption extends React.Component {
     const { error } = this.state;
     return (
       <div>
-        {console.log(this.state.error === true) ? 'true' : 'false'}
         {this.state.error && <p>{error}</p>}
         <form onSubmit={this.addOption}>
           <input type='text' name='option' />
