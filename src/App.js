@@ -7,14 +7,32 @@ class IndecisionApp extends React.Component {
     this.handlePick = this.handlePick.bind(this);
     this.handleAddItem = this.handleAddItem.bind(this);
     this.removeItem = this.removeItem.bind(this);
+    this.loadOptions = this.loadOptions.bind(this);
+    this.saveOptions = this.saveOptions.bind(this);
   }
 
   componentDidMount() {
-    console.log('mount');
+    this.loadOptions();
+  }
+
+  loadOptions() {
+    const loadedOptions = [];
+    if (localStorage.getItem('options') !== null) {
+      const arr = JSON.parse(localStorage.getItem('options'));
+      this.setState(() => ({ options: arr }));
+    }
+  }
+
+  saveOptions() {
+    localStorage.setItem('options', JSON.stringify(this.state.options));
   }
 
   componentDidUpdate(prevProps, prevState) {
     console.log(prevState);
+    if (prevState.options.length != this.state.options.length) {
+      console.log('saving');
+      this.saveOptions();
+    }
   }
 
   componentWillUnmount() {
@@ -137,8 +155,8 @@ class AddOption extends React.Component {
     const item = e.target.elements.option.value.trim();
     const error = this.props.handleAddItem(item);
 
-    if (error) {
-      this.setState(() => ({ error }));
+    this.setState(() => ({ error }));
+    if (!error) {
       e.target.elements.option.value = '';
     }
   }
@@ -161,4 +179,4 @@ class AddOption extends React.Component {
 //   return <p>{props.title}</p>;
 // };
 
-ReactDOM.render(<IndecisionApp />, document.getElementById('root'));
+ReactDOM.render(<IndecisionApp arr={[]} />, document.getElementById('root'));

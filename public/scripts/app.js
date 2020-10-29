@@ -22,18 +22,40 @@ var IndecisionApp = function (_React$Component) {
     _this.handlePick = _this.handlePick.bind(_this);
     _this.handleAddItem = _this.handleAddItem.bind(_this);
     _this.removeItem = _this.removeItem.bind(_this);
+    _this.loadOptions = _this.loadOptions.bind(_this);
+    _this.saveOptions = _this.saveOptions.bind(_this);
     return _this;
   }
 
   _createClass(IndecisionApp, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
-      console.log('mount');
+      this.loadOptions();
+    }
+  }, {
+    key: 'loadOptions',
+    value: function loadOptions() {
+      var loadedOptions = [];
+      if (localStorage.getItem('options') !== null) {
+        var arr = JSON.parse(localStorage.getItem('options'));
+        this.setState(function () {
+          return { options: arr };
+        });
+      }
+    }
+  }, {
+    key: 'saveOptions',
+    value: function saveOptions() {
+      localStorage.setItem('options', JSON.stringify(this.state.options));
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps, prevState) {
       console.log(prevState);
+      if (prevState.options.length != this.state.options.length) {
+        console.log('saving');
+        this.saveOptions();
+      }
     }
   }, {
     key: 'componentWillUnmount',
@@ -210,10 +232,10 @@ var AddOption = function (_React$Component2) {
       var item = e.target.elements.option.value.trim();
       var error = this.props.handleAddItem(item);
 
-      if (error) {
-        this.setState(function () {
-          return { error: error };
-        });
+      this.setState(function () {
+        return { error: error };
+      });
+      if (!error) {
         e.target.elements.option.value = '';
       }
     }
@@ -252,4 +274,4 @@ var AddOption = function (_React$Component2) {
 //   return <p>{props.title}</p>;
 // };
 
-ReactDOM.render(React.createElement(IndecisionApp, null), document.getElementById('root'));
+ReactDOM.render(React.createElement(IndecisionApp, { arr: [] }), document.getElementById('root'));
