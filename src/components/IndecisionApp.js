@@ -1,3 +1,9 @@
+import React from 'react';
+import AddOption from './AddOption';
+import Header from './Header';
+import Action from './Action';
+import Options from './Options';
+
 class IndecisionApp extends React.Component {
   constructor(props) {
     super(props);
@@ -84,90 +90,5 @@ class IndecisionApp extends React.Component {
     );
   }
 }
-const Header = (props) => {
-  const { title, subTitle } = props;
-  return (
-    <div>
-      <h1>{title} </h1>
-      {subTitle && <h2>{subTitle}</h2>}
-    </div>
-  );
-};
 
-const Action = (props) => {
-  const { length } = props;
-  return (
-    <div>
-      <button disabled={length} onClick={props.handlePick}>
-        What should I do?
-      </button>
-    </div>
-  );
-};
-
-const Options = (props) => {
-  const { options, handleRemoveAll, removeItem } = props;
-  return (
-    <div>
-      <button onClick={() => handleRemoveAll()}>Remove All</button>
-      {options.map((option, index) => (
-        <Option key={index} option={option} removeItem={removeItem} />
-      ))}
-    </div>
-  );
-};
-
-const Option = (props) => {
-  const { option, removeItem } = props;
-  return (
-    <div>
-      {option}
-      <button
-        onClick={() => {
-          removeItem(option);
-        }}
-      >
-        Remove
-      </button>
-    </div>
-  );
-};
-
-class AddOption extends React.Component {
-  constructor(props) {
-    super(props);
-    this.addOption = this.addOption.bind(this);
-
-    this.state = { error: undefined };
-  }
-
-  addOption(e) {
-    e.preventDefault();
-    const item = e.target.elements.option.value.trim();
-    const error = this.props.handleAddItem(item);
-
-    this.setState(() => ({ error }));
-    if (!error) {
-      e.target.elements.option.value = '';
-    }
-  }
-  render() {
-    const { error } = this.state;
-    return (
-      <div>
-        {this.state.error && <p>{error}</p>}
-        <form onSubmit={this.addOption}>
-          <input type='text' name='option' />
-          <button>Add Option</button>
-        </form>
-      </div>
-    );
-  }
-}
-// }
-
-// const User = (props) => {
-//   return <p>{props.title}</p>;
-// };
-
-ReactDOM.render(<IndecisionApp arr={[]} />, document.getElementById('root'));
+export default IndecisionApp;
