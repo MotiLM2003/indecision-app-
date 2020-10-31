@@ -5,33 +5,23 @@ import Action from './Action';
 import Options from './Options';
 
 class IndecisionApp extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { options: this.props.arr };
+  state = { options: [] };
 
-    this.handleRemoveAll = this.handleRemoveAll.bind(this);
-    this.handlePick = this.handlePick.bind(this);
-    this.handleAddItem = this.handleAddItem.bind(this);
-    this.removeItem = this.removeItem.bind(this);
-    this.loadOptions = this.loadOptions.bind(this);
-    this.saveOptions = this.saveOptions.bind(this);
-  }
-
-  componentDidMount() {
+  componentDidMount = () => {
     this.loadOptions();
-  }
+  };
 
-  loadOptions() {
+  loadOptions = () => {
     const loadedOptions = [];
     if (localStorage.getItem('options') !== null) {
       const arr = JSON.parse(localStorage.getItem('options'));
       this.setState(() => ({ options: arr }));
     }
-  }
+  };
 
-  saveOptions() {
+  saveOptions = () => {
     localStorage.setItem('options', JSON.stringify(this.state.options));
-  }
+  };
 
   componentDidUpdate(prevProps, prevState) {
     console.log(prevState);
@@ -45,16 +35,16 @@ class IndecisionApp extends React.Component {
     console.log('component unmount');
   }
 
-  handleRemoveAll() {
+  handleRemoveAll = () => {
     this.setState(() => ({ options: [] }));
-  }
+  };
 
-  handlePick() {
+  handlePick = () => {
     const index = Math.floor(Math.random() * this.state.options.length);
     alert(this.state.options[index]);
-  }
+  };
 
-  handleAddItem(item) {
+  handleAddItem = (item) => {
     if (!item) {
       return 'Option must have value.';
     }
@@ -64,13 +54,13 @@ class IndecisionApp extends React.Component {
     this.setState((prev) => ({
       options: prev.options.concat([item]),
     }));
-  }
+  };
 
-  removeItem(option) {
+  removeItem = (option) => {
     this.setState((prevState) => ({
       options: prevState.options.filter((x) => x !== option),
     }));
-  }
+  };
 
   render() {
     const title = 'Indecision';

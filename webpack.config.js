@@ -22,18 +22,5 @@ module.exports = {
   devServer: {
     // Serve index.html as the base
     contentBase: path.join(__dirname, 'public'),
-
-    // Enable compression
-    compress: true,
-
-    // Enable hot reloading
-    hot: true,
-
-    host,
-
-    port: 3000,
-
-    // Public path is root of content base
-    publicPath: '/',
   },
 };
