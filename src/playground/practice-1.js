@@ -3,13 +3,14 @@ class Counter extends React.Component {
     super(props);
 
     this.state = {
-      counter: props.counter,
+      counter: 0,
       name: 'moti',
     };
 
     this.handleIncrease = this.handleIncrease.bind(this);
     this.handleDecrease = this.handleDecrease.bind(this);
     this.handleReset = this.handleReset.bind(this);
+    this.saveOptions = this.saveCounter.bind(this);
   }
 
   handleIncrease() {
@@ -18,6 +19,26 @@ class Counter extends React.Component {
     });
 
     console.log(this.state);
+  }
+
+  componentDidMount() {
+    console.log('mount');
+    this.loadCounter();
+  }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.counter != this.state.counter) {
+      this.saveCounter();
+    }
+  }
+  loadCounter() {
+    if (localStorage.getItem('counter')) {
+      const counter = parseInt(localStorage.getItem('counter'), 10);
+      this.setState(() => ({ counter }));
+    }
+  }
+
+  saveCounter() {
+    localStorage.setItem('counter', this.state.counter);
   }
 
   handleDecrease() {
@@ -43,7 +64,10 @@ class Counter extends React.Component {
   render() {
     return (
       <div>
-        <h1>Counter : {this.state.counter}</h1>
+        <h1>
+          Counter : {this.state.counter}
+          <p>Helllo</p>
+        </h1>
         <h2>{this.state.name}</h2>
         <button onClick={this.handleIncrease}>+1</button>
         <button onClick={this.handleDecrease}>-1</button>
@@ -53,9 +77,6 @@ class Counter extends React.Component {
   }
 }
 
-Counter.defaultProps = {
-  counter: Math.floor(Math.random() * 10) + 1,
-};
 ReactDOM.render(<Counter />, document.getElementById('root'));
 
 // let count = 0;
