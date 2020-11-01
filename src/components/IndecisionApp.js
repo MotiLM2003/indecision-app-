@@ -79,7 +79,10 @@ class IndecisionApp extends React.Component {
     const { options } = this.state;
     return (
       <div>
-        <Header />
+        <Header
+          title='Hello World this is the header'
+          subTitle='this is subtitle'
+        />
         <Action length={options.length === 0} handlePick={this.handlePick} />
         <Options
           options={options}
