@@ -1,11 +1,14 @@
 import React from 'react';
 
 const Option = (props) => {
-  const { option, removeItem } = props;
+  const { option, removeItem, count } = props;
   return (
-    <div>
-      {option}
+    <div className='option'>
+      <p className='option__text'>
+        {count}. {option}
+      </p>
       <button
+        className='button button--link'
         onClick={() => {
           removeItem(option);
         }}
